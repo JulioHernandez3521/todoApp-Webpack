@@ -1,8 +1,18 @@
 import { Todo } from "./todo.class";
 
 export class TodoList {
+    #todos;
+
     constructor () {
-        this.todos = [];
+        this.#todos = [];
+    }
+
+    /**
+     * 
+     * @returns {Array<Todo>} todos
+     */
+    getTodos (){
+        return [...this.#todos];
     }
 
     /**
@@ -10,7 +20,7 @@ export class TodoList {
      * @param {Todo} todo 
      */
     nuevoTodo (todo) { 
-        this.todos.push(todo)
+        this.#todos.push(todo)
     }
 
     /**
@@ -27,6 +37,13 @@ export class TodoList {
      */
 
     toggleTodo (id){
+        for (const todo of this.#todos) {
+            // console.log(id, todo.getId());
+            if(id == todo.getId()){
+                todo.setCompletado(!(todo.getCompletado())); 
+                break;
+            }
+        }
 
     }
 
