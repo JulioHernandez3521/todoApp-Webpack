@@ -1,8 +1,21 @@
 export class Todo {
+
+    static  objToTodo ( todo ) {
+        const {completado, creado, id, tarea } = todo;
+        const tempTodo = new Todo( tarea);
+        tempTodo.setCompletado( completado );
+        tempTodo.setId(id);
+        tempTodo.setCreado(creado);
+        return tempTodo;
+    } 
+
+    
     #tarea ='';
     #id = 0;
     #completado = false;
     #creado = 0;
+
+
     /**
      * 
      * @param {String} tarea 
@@ -47,20 +60,34 @@ export class Todo {
     /**
      * 
      * @param {Boolean} estado 
-     * @returns <Todo> 
      */
     setCompletado ( estado ) {
         this.#completado = estado;
-        return this;
+        // return this;
+    }
+    /**
+     * 
+     * @param {String|Number} id 
+     */
+    setId ( id ) {
+        this.#id = id;
+        // return this;
+    }
+    /**
+     * 
+     * @param {Date} creado 
+     */
+    setCreado (creado ) {
+        this.#creado = creado;
+        // return this;
     }
     /**
      * 
      * @param {String} newTarea 
-     *  @returns <Todo> 
      */
     setTarea ( newTarea ) {
         this.#tarea = newTarea;
-        return this;
+        // return this;
     }
 
 

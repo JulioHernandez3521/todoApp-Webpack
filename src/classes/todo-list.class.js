@@ -4,7 +4,8 @@ export class TodoList {
     #todos;
 
     constructor () {
-        this.#todos = [];
+        // this.#todos = [];
+        this.cargarTodos();
     }
 
     /**
@@ -17,10 +18,19 @@ export class TodoList {
 
     /**
      * 
+     * @param {Array<Todo>} newTodos 
+     */
+    setTodos( newTodos) {
+        this.#todos = newTodos;
+    }
+
+    /**
+     * 
      * @param {Todo} todo 
      */
     nuevoTodo (todo) { 
         this.#todos.push(todo)
+        this.#guardarLocalStorage();
     }
 
     /**
@@ -29,7 +39,8 @@ export class TodoList {
      */
 
     eliminarTodo (id){
-
+        this.setTodos(this.#todos.filter(e => e.id != id ));
+        this.#guardarLocalStorage();
     }
     /**
      * 
@@ -41,6 +52,7 @@ export class TodoList {
             // console.log(id, todo.getId());
             if(id == todo.getId()){
                 todo.setCompletado(!(todo.getCompletado())); 
+                this.#guardarLocalStorage()
                 break;
             }
         }
@@ -48,6 +60,17 @@ export class TodoList {
     }
 
     eliminarCompletos(){
-        
+        this.setTodos(this.#todos.filter(e => !e.getCompletado()));
+        this.#guardarLocalStorage();
+    }
+
+    #guardarLocalStorage (){
+        localStorage.setItem('todos', JSON.stringify(this.#todos));
+    }
+
+    cargarTodos(){
+        this.#todos = (localStorage.getItem('todos')) ? JSON.parse(localStorage.getItem('todos')): [];
+        this.#todos = this.#todos.map( Todo.objToTodo);
+
     }
 }

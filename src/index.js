@@ -5,8 +5,6 @@ import './styles.css';
 
 export const todoList = new TodoList();
 
-const tarea = new Todo('Aprender TypeScript');
-
-todoList.nuevoTodo(tarea);
-
-crearTodoHTML(tarea)
+const todos = todoList.getTodos();
+todos.forEach(e => crearTodoHTML(e));
+console.log(todos)

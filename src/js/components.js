@@ -3,9 +3,11 @@
 
 import { Todo } from "../classes";
 import { todoList } from "../index";
+import { todoToPublic } from "../mappers/TodoToPublic";
 
 const divTodoList = document.querySelector('.todo-list');    
 const txtInput = document.querySelector('.new-todo');
+const btnBorrar = document.querySelector('.clear-completed');
 
 /**
  * 
@@ -39,7 +41,7 @@ txtInput.addEventListener('keyup', (e) => {
 
     if(e.keyCode === 13 && txtInput.value.trim().length > 0 ){
         const nuevoTodo = new Todo(txtInput.value);
-        todoList.nuevoTodo(nuevoTodo);
+        todoList.nuevoTodo(todoToPublic(nuevoTodo));
         crearTodoHTML(nuevoTodo);
         txtInput.value = '';
     } 
@@ -56,6 +58,23 @@ divTodoList.addEventListener('click', (e) =>{
     if(nombreElemento.includes('input')){
         todoList.toggleTodo(todoId);
         todoElemento.classList.toggle('completed');
+    }else if(nombreElemento.includes('button')){
+        todoList.eliminarTodo(todoId);
+        divTodoList.removeChild(todoElemento);
     }
     
-})
+});
+
+
+btnBorrar.addEventListener('click', ()=>{
+    todoList.eliminarCompletos();
+
+    for(let i = divTodoList.children.length-1; i>=0; i--){
+
+        const elemento = divTodoList.children[i];
+        if(elemento.classList.contains('completed')){
+            divTodoList.removeChild(elemento);
+        }
+    }
+
+});
