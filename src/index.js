@@ -7,4 +7,4 @@ export const todoList = new TodoList();
 
 const todos = todoList.getTodos();
 todos.forEach(e => crearTodoHTML(e));
-console.log(todos)
+// console.log(todos)
